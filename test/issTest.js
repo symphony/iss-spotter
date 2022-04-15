@@ -7,20 +7,15 @@ describe('fetchMyIP()', () => {
       const dataType = "string";
       assert.equal(err, null);
       assert.equal(dataType, typeof(data));
-
-      done();
-    });
-  }),
-  it('passes error to callback if error', (done) => {
-    fetchMyIP((err, desc) => {
-      const expectedErr = "Error";
-      // compare returned description
-      assert.equal(expectedErr, err);
-
-      // desc should be null
-      assert.equal(desc, null);
-
       done();
     });
   });
+  // it('passes error to callback if error', (done) => {
+  //   fetchMyIP((err, desc) => {
+  //     const errType = "Error";
+  //     assert.equal(errType, typeof(err));
+  //     assert.equal(desc, null);
+  //     done();
+  //   });
+  // });
 });
