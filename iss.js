@@ -2,7 +2,7 @@ const request = require('./node_modules/request');
 
 const checkErrors = (error, status, data, callback) =>  {
   if (error) throw callback(error, status);
-  if (status?.statusCode !== 200) throw callback("Bad request", status, data);
+  if (status.statusCode !== 200) throw callback("Bad request", status, data);
   if (!data.includes("}")) throw callback("Return value not JSON", status, data);
 };
 
