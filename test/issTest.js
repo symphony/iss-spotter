@@ -1,8 +1,8 @@
-const { fetchMyIP } = require('../iss');
+const { fetchMyIP, fetchCoordsByIP } = require('../iss');
 const { assert } = require('chai');
 
 describe('fetchMyIP()', () => {
-  it('fetches your public ip and saves it to a variable', (done) => {
+  it('returns your IP as a string', (done) => {
     fetchMyIP((err, data) => {
       const dataType = "string";
       assert.equal(err, null);
@@ -10,12 +10,15 @@ describe('fetchMyIP()', () => {
       done();
     });
   });
-  // it('passes error to callback if error', (done) => {
-  //   fetchMyIP((err, desc) => {
-  //     const errType = "Error";
-  //     assert.equal(errType, typeof(err));
-  //     assert.equal(desc, null);
-  //     done();
-  //   });
-  // });
+});
+
+describe('fetchCoordsByIP()', () => {
+  it('returns your coordinates in an object', (done) => {
+    fetchCoordsByIP("192.0.0.1", (err, data) => {
+      assert.equal(err, null);
+      assert.notDeepEqual(data.latitude, undefined);
+      assert.notDeepEqual(data.longitude, undefined);
+      done();
+    });
+  });
 });
