@@ -2,7 +2,7 @@ const request = require('./node_modules/request');
 
 const checkErrors = (error, status, data, callback) =>  {
   if (error) throw callback(error, status);
-  if (status?.statusCode !== 200) throw callback(`Bad request`, status);
+  if (status?.statusCode !== 200) throw callback('Bad request', status);
   if (!data.includes("}")) throw callback("Return value not JSON", status);
 };
 
@@ -21,4 +21,12 @@ const fetchCoordsByIP = (IP, callback) => {
   });
 };
 
-module.exports = { fetchMyIP, fetchCoordsByIP };
+const fetchIssFlyoverTimes = (geo, callback) => {
+  request(`https://iss-pass.herokuapp.com/json/?lat=${geo.latitude}&lon=${geo.longitude}`, (error, status, data) => {
+    checkErrors(error, status, data, callback)
+    const {response} = JSON.parse(data);
+    callback(error, response);
+  });
+};
+
+module.exports = { fetchMyIP, fetchCoordsByIP, fetchIssFlyoverTimes };
