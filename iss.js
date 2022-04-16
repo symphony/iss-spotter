@@ -5,7 +5,7 @@ const checkErrors = (error, response, data, task) =>  {
   const msg = `Problem fetching ${task}: ${error}\nStatus Code: ${response && response.statusCode}${data ? '\nMessage: ' + data : ''}`;
   if (error || response.statusCode !== 200) {
     console.log(msg);
-    throw Error;
+    throw TypeError("Error");
   }
   if (!data.includes("}")) {
     console.log(msg);
