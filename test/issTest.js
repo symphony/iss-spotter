@@ -3,9 +3,9 @@ const { assert } = require('chai');
 
 describe('fetchMyIP()', () => {
   it('returns your IP as a string', done => {
-    fetchMyIP((data) => {
+    fetchMyIP(({ip}) => {
       const dataType = "string";
-      assert.equal(dataType, typeof(data));
+      assert.equal(dataType, typeof(ip));
       done();
     });
   });
@@ -13,9 +13,9 @@ describe('fetchMyIP()', () => {
 
 describe('fetchCoordsByIP()', () => {
   it('returns your coordinates in an object', done => {
-    fetchCoordsByIP("192.0.0.1", (data) => {
-      assert.notDeepEqual(data.latitude, undefined);
-      assert.notDeepEqual(data.longitude, undefined);
+    fetchCoordsByIP("192.0.0.1", ({latitude, longitude}) => {
+      assert.notDeepEqual(latitude, undefined);
+      assert.notDeepEqual(longitude, undefined);
       done();
     });
   });
@@ -23,10 +23,10 @@ describe('fetchCoordsByIP()', () => {
 
 describe('fetchIssFlyoverTimes()', () => {
   it('returns flyover times as an array', done => {
-    fetchIssFlyoverTimes({ latitude: 50, longitude: -100 }, (data) => {
-      assert.notDeepEqual(data.length === 0);
-      assert.notDeepEqual(data[0].risetime, undefined);
-      assert.notDeepEqual(data[0].duration, undefined);
+    fetchIssFlyoverTimes(50, -100, ({response}) => {
+      assert.notDeepEqual(response.length === 0);
+      assert.notDeepEqual(response[0].risetime, undefined);
+      assert.notDeepEqual(response[0].duration, undefined);
       done();
     });
   });

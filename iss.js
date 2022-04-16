@@ -1,34 +1,26 @@
 const request = require('./node_modules/request');
 
-const checkErrors = (error, response, data, task) =>  {
-  if (error || response.statusCode !== 200) {
-    console.log(`Problem fetching ${task}: ${error}\nStatus Code: ${response && response.statusCode}${data ? '\nMessage: ' + data : ''}`);
-    throw TypeError("Error");
-  }
+const fetchRequest = (url, callback) => {
+  request(url, (error, response, data) => {
+    if (error || response.statusCode !== 200) {
+      console.log(`Problem fetching: ${error}\nStatus Code: ${response && response.statusCode}${data ? '\nMessage: ' + data : ''}`);
+      throw TypeError("Error");
+    }
+    callback(JSON.parse(data));
+  });
 };
 
-// Async functions
+// async functions
 const fetchMyIP = (callback) => {
-  request('https://api.IPify.org?format=json', (error, status, data) => {
-    checkErrors(error, status, data, "IP");
-    callback(JSON.parse(data).ip);
-  });
+  fetchRequest('https://api.IPify.org?format=json', callback);
 };
 
-const fetchCoordsByIP = (IP, callback) => {
-  request(`https://freegeoip.app/json/${IP}`, (error, status, data) => {
-    checkErrors(error, status, data, "geo");
-    const {latitude, longitude} = JSON.parse(data);
-    callback({latitude, longitude});
-  });
+const fetchCoordsByIP = (ip, callback) => {
+  fetchRequest(`https://freegeoip.app/json/${ip}`, callback);
 };
 
-const fetchIssFlyoverTimes = (geo, callback) => {
-  request(`https://iss-pass.herokuapp.com/json/?lat=${geo.latitude}&lon=${geo.longitude}`, (error, status, data) => {
-    checkErrors(error, status, data, "schedule");
-    const {response} = JSON.parse(data);
-    callback(response);
-  });
+const fetchIssFlyoverTimes = (lat, lon, callback) => {
+  fetchRequest(`https://iss-pass.herokuapp.com/json/?lat=${lat}&lon=${lon}`, callback);
 };
 
 module.exports = { fetchMyIP, fetchCoordsByIP, fetchIssFlyoverTimes };
