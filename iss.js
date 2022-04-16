@@ -3,7 +3,7 @@ const request = require('./node_modules/request');
 // Error handling - returns error as string, or null if none
 const checkErrors = (error, response, data, task) =>  {
   const msg = `Problem fetching ${task}: ${error}\nStatus Code: ${response && response.statusCode}${data ? '\nMessage: ' + data : ''}`;
-  if (error && response.statusCode !== 200) {
+  if (error || response.statusCode !== 200) {
     console.log(msg);
     throw Error;
   }
