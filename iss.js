@@ -11,7 +11,7 @@ const checkErrors = (error, response, data, task) =>  {
 const fetchMyIP = (callback) => {
   request('https://api.IPify.org?format=json', (error, status, data) => {
     checkErrors(error, status, data, "IP");
-    callback(error, status, JSON.parse(data).ip);
+    callback(JSON.parse(data).ip);
   });
 };
 
@@ -19,7 +19,7 @@ const fetchCoordsByIP = (IP, callback) => {
   request(`https://freegeoip.app/json/${IP}`, (error, status, data) => {
     checkErrors(error, status, data, "geo");
     const {latitude, longitude} = JSON.parse(data);
-    callback(error, status, {latitude, longitude});
+    callback({latitude, longitude});
   });
 };
 
@@ -27,7 +27,7 @@ const fetchIssFlyoverTimes = (geo, callback) => {
   request(`https://iss-pass.herokuapp.com/json/?lat=${geo.latitude}&lon=${geo.longitude}`, (error, status, data) => {
     checkErrors(error, status, data, "schedule");
     const {response} = JSON.parse(data);
-    callback(error, status, response);
+    callback(response);
   });
 };
 

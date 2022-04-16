@@ -3,9 +3,8 @@ const { assert } = require('chai');
 
 describe('fetchMyIP()', () => {
   it('returns your IP as a string', done => {
-    fetchMyIP((err, status, data) => {
+    fetchMyIP((data) => {
       const dataType = "string";
-      assert.equal(err, null);
       assert.equal(dataType, typeof(data));
       done();
     });
@@ -14,8 +13,7 @@ describe('fetchMyIP()', () => {
 
 describe('fetchCoordsByIP()', () => {
   it('returns your coordinates in an object', done => {
-    fetchCoordsByIP("192.0.0.1", (err, status, data) => {
-      assert.equal(err, null);
+    fetchCoordsByIP("192.0.0.1", (data) => {
       assert.notDeepEqual(data.latitude, undefined);
       assert.notDeepEqual(data.longitude, undefined);
       done();
@@ -25,16 +23,11 @@ describe('fetchCoordsByIP()', () => {
 
 describe('fetchIssFlyoverTimes()', () => {
   it('returns flyover times as an array', done => {
-    fetchIssFlyoverTimes({ latitude: 50, longitude: -100 }, (err, status, data) => {
-      assert.equal(err, null);
+    fetchIssFlyoverTimes({ latitude: 50, longitude: -100 }, (data) => {
       assert.notDeepEqual(data.length === 0);
       assert.notDeepEqual(data[0].risetime, undefined);
       assert.notDeepEqual(data[0].duration, undefined);
       done();
     });
   });
-
-  // it('throws an error when problem with fetching', done => {
-  //   fetchIssFlyoverTimes({}, () => {done()}), Error);
-  // });
 });
