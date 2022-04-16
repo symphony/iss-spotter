@@ -2,10 +2,10 @@
   "name": "iss-spotter",
   "version": "1.0.0",
   "description": "",
-  "main": "./lib/index2.js",
+  "main": "./lib/index.js",
   "scripts": {
     "test": "mocha test/",
-    "start": "node ./lib/index2.js"
+    "start": "node ./lib/index.js"
   },
   "keywords": [],
   "author": "",

@@ -1,4 +1,4 @@
-const { fetchMyIP, fetchCoordsByIP, fetchIssFlyoverTimes } = require('../iss-promised');
+const { fetchMyIP, fetchCoordsByIP, fetchIssFlyoverTimes } = require('../iss');
 const { assert } = require('chai');
 
 describe('fetchMyIP()', () => {
@@ -34,13 +34,7 @@ describe('fetchIssFlyoverTimes()', () => {
     });
   });
 
-  // it('throws an error when bad request', done => {
-  //   assert.throw(() => {
-  //     fetchIssFlyoverTimes({}, (err, status, data) => {
-  //       assert.deepEqual("invalid coordinates", data);
-  //       assert.notDeepEqual(200, status.statusCode);
-  //       done();
-  //     });
-  //   });
+  // it('throws an error when problem with fetching', done => {
+  //   fetchIssFlyoverTimes({}, () => {done()}), Error);
   // });
 });
