@@ -1,12 +1,17 @@
 const request = require('./node_modules/request');
 
+const checkErrors = (error, response, body) => {
+  if (error || response.statusCode !== 200) {
+    const data = body ? '\nBody: ' + body.slice(0, 100) : ''; // include retrieved data if any. truncate to 100 chars max.
+    console.log(`Problem fetching: ${error}\nStatus Code: ${response && response.statusCode}${data}`);
+    throw TypeError("Error");
+  }
+};
+
 const fetchRequest = (url, callback) => {
-  request(url, (error, response, data) => {
-    if (error || response.statusCode !== 200) {
-      console.log(`Problem fetching: ${error}\nStatus Code: ${response && response.statusCode}${data ? '\nMessage: ' + data : ''}`);
-      throw TypeError("Error");
-    }
-    callback(JSON.parse(data));
+  request(url, (error, response, body) => {
+    checkErrors(error, response, body);
+    callback(JSON.parse(body));
   });
 };
 
@@ -24,3 +29,4 @@ const fetchIssFlyoverTimes = (lat, lon, callback) => {
 };
 
 module.exports = { fetchMyIP, fetchCoordsByIP, fetchIssFlyoverTimes };
+
